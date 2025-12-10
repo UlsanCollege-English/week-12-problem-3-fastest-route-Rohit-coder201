@@ -1,7 +1,7 @@
 name: Autograding Tests
-'on':
-- push
-- repository_dispatch
+on:
+ push
+
 permissions:
   checks: write
   actions: read
@@ -15,10 +15,13 @@ jobs:
       uses: actions/checkout@v4
     - name: tests
       id: tests
-      uses: classroom-resources/autograding-python-grader@v1
+      uses: classroom-resources/autograding-command-grader@v1
       with:
+        test-name: 'Run tests'
+        setup-command: 'pip install pytest'
+        command: 'python -m pytest'
         timeout: 10
-        setup-command: ''
+        max-score: 100
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
